@@ -1,4 +1,10 @@
-﻿using System;
+/*4. Extend the tic-tac-toe game from the previous assignment and add a menu with the following
+options: a) New game, b) About the author, and c) Exit. Additionally, add a mechanism which will
+check the score of the game after each move. If one of the players won, the game should end with
+an appropriate message.*/
+
+using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 namespace Tic_Tac_Toe_Game
 
@@ -10,71 +16,95 @@ namespace Tic_Tac_Toe_Game
         static int player = 1;
         static int choice;
         static int endGameCondidition = 0;
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            do
+
+            Console.WriteLine("<TicTacToe Game> \n");
+            Console.WriteLine("Welcome to the main menu: \na) New game. \nb) About the author. \nc) Exit.\n");
+            Console.WriteLine("Choose from the options mentioned above: ");
+            string input1 = Console.ReadLine();
+            if (input1 == "a")
             {
-                Console.WriteLine("\n");
-                Console.WriteLine("Player1: X and Player2: O");
-                Console.WriteLine("\n");
-                if (player % 2 == 0)
+                do
                 {
-                    Console.WriteLine("Player 2 turn");
-                }
-                else
-                {
-                    Console.WriteLine("Player 1 turn");
-                }
-                Console.WriteLine("\n");
-
-                Board();
-
-                try
-                {
-                    choice = int.Parse(Console.ReadLine());
-                    if (arr[choice] != 'X' && arr[choice] != 'O')
+                    Console.WriteLine("\n");
+                    Console.WriteLine("Player1: X and Player2: O");
+                    Console.WriteLine("\n");
+                    if (player % 2 == 0)
                     {
-                        if (player % 2 == 0)
-                        {
-                            arr[choice] = 'O';
-                            player++;
-                        }
-                        else
-                        {
-                            arr[choice] = 'X';
-                            player++;
-                        }
+                        Console.WriteLine("Player 2 turn");
                     }
                     else
                     {
-                        Console.WriteLine("Not allowed! The square {0} is already reserved for {1}", choice, arr[choice]);
+                        Console.WriteLine("Player 1 turn");
+                    }
+                    Console.WriteLine("\n");
+
+                    Board();
+
+                    try
+                    {
+                        choice = int.Parse(Console.ReadLine());
+                        if (arr[choice] != 'X' && arr[choice] != 'O')
+                        {
+                            if (player % 2 == 0)
+                            {
+                                arr[choice] = 'O';
+                                player++;
+                            }
+                            else
+                            {
+                                arr[choice] = 'X';
+                                player++;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nNot allowed! The square {0} is already reserved for {1}", choice, arr[choice]);
+                            Console.WriteLine("\n");
+                        }
+                        endGameCondidition = CheckWin();
+                    }
+                    catch
+                    {
+                        Console.WriteLine("\nPlease insert a valid number between 1 and 9");
                         Console.WriteLine("\n");
                     }
-                    endGameCondidition = CheckWin();
+                    finally
+                    {
+                        CheckWin();
+                    }
                 }
-                catch
+                while (endGameCondidition != 1 && endGameCondidition != -1);
+
+                Board();
+                if (endGameCondidition == 1)
                 {
-                    Console.WriteLine("Please insert a valid number between 1 and 9");
-                    Console.WriteLine("\n");
+                    Console.WriteLine("\nPlayer {0} is the winner!", (player % 2) + 1);
                 }
-                finally
+                else
                 {
-                    CheckWin();
+                    Console.WriteLine("\nDraw Match");
                 }
+                Console.ReadLine();
             }
-            while (endGameCondidition != 1 && endGameCondidition != -1);
-
-            Board();
-
-            if (endGameCondidition == 1)
+            else if (input1 == "b")
             {
-                Console.WriteLine("Player {0} is the winner!", (player % 2) + 1);
+                Console.WriteLine("\nThe programmer of this simple game is Mohamed Ahmed");
             }
             else
             {
-                Console.WriteLine("Draw Match");
+                Console.WriteLine("\nAre you sure you want to quit? [y/n]");
+                string input2 = Console.ReadLine();
+                if(input2 == "y")
+                {
+                    Console.WriteLine("\nThe program is closing. Thank you for your time.");
+                }
+                else
+                {
+                    Console.WriteLine("\nWelcome Back!");
+                }
             }
-            Console.ReadLine();
         }
         private static void Board()
         {
